@@ -2,6 +2,14 @@
 
 Nonsense freak experiments...
 
-![sphere](/img/recon1.png)
+## Example input image
+![image input](/img/recon_input.png)
 
-[video](/img/sphere.mp4)
+## Example output image
+![image output](/img/recon_output.png)
+
+## Example input video
+[video input](/img/sphere_input.mp4)
+
+## Example output video
+[video output](/img/sphere.mp4)
