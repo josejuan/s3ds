@@ -1,0 +1,42 @@
+# Calibrate monitor
+
+Draw a box:
+```shell
+$ s3ds-graycode box :0.1 1280 1024 1
+```
+
+Then, config manually or automatically you monitor/projector bounds.
+
+# Synchronize projection and shooter
+
+When run the code gray projector (eg):
+```shell
+$ s3ds-graycode graycodenumbers :0.1 1280 1024 1000
+```
+
+It will be waiting for `SIGUSR2` signal:
+```shell
+$ kill -s SIGUSR2 <pid>
+```
+
+Then, print first frame, wait delay, print second frame, wait delay, ...
+
+Example using `gphoto2`:
+
+```shell
+$ ./target/bin/s3ds-graycode graycodenumbers :0.0 720 480 1000 & ( sleep 5; kill -s SIGUSR2 $!; gphoto2 --interval 1 --frames 11 --capture-image-and-download )
+```
+
+Probably you should adjust time parameters to match two sequences (projection and shooting):
+
+```shell
+$ ./target/bin/s3ds-graycode graycodenumbers :0.0 720 480 1600 & ( sleep 5; kill -s SIGUSR2 $!; sleep 0.25; gphoto2 --interval 1 --frames 11 --capture-image-and-download )
+```
+
+One you get all numbers (10, 9, ...) you can change `graycodenumbers` to `graycode`.
+
+If you change the camera exposition time, probably, your `gphoto2` time will be not the same, use `time` to estimate times:
+
+```shell
+$ ./target/bin/s3ds-graycode graycode :0.0 720 480 1447 & ( sleep 5; kill -s SIGUSR2 $!; sleep 0.45; time gphoto2 --interval 1 --frames 10 --capture-image-and-download )
+```
